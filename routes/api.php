@@ -22,6 +22,9 @@ Route::middleware('guest')->group(function () {
 	Route::post('register', [UserController::class, 'register']);
 	Route::post('upload_photo', [UserController::class, 'upload_photo']);
 
+  # Guru
+  Route::post('guru/murid', [UserController::class, 'murid_by_class']);
+
   # Google OAuth2
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
   Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);

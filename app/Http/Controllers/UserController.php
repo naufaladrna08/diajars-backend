@@ -10,6 +10,7 @@ use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\JWTAuth;
 use Socialite;
 
@@ -153,6 +154,7 @@ class UserController extends Controller {
     ], 200);
   }
 
+  /* ME */
   public function index(Request $request) {
     return response()->json([
       'success' => true,
@@ -167,4 +169,19 @@ class UserController extends Controller {
       'success' => true
     ]);
   }
+
+  /* GURU */
+  public function murid_by_class(Request $r) {
+		/* Check if 'id' exist */
+		$kelas = Kelas::where('guruId', $r['guruId'])->first();
+		$id = $kelas['id'];
+
+		$students = DB::table('users')
+									->select('users.nama', 'users.jenisKelamin')
+					  		  ->join('relasi_kelas', 'users.id', '=', 'relasi_kelas.uid')
+					  		  ->where('relasi_kelas.kid', '=', $id)
+					  		  ->get();
+
+		return response()->json($students, 200);
+	}
 }
