@@ -95,6 +95,8 @@ class UserController extends Controller {
 	        'uid' => $user['id'],
 	        'type' => $type
 	      ]);
+
+				return response()->json(['status' => 'success'], 200);
 	    }
 		}
   }
@@ -127,7 +129,7 @@ class UserController extends Controller {
     }
 
     try {
-      if (!$token = $this->auth->attempt($request->only('email'))) {
+      if (!$token = $this->auth->attempt($r->only('email'))) {
         return response()->json([
           'success' => false,
           'errors' => [
