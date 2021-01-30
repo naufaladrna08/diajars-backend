@@ -32,7 +32,7 @@ class UserController extends Controller {
 			$uniquePtr = strtoupper(Str::random(6));
 		}
 
-		if (isset($r['photo'])) {
+		if (isset($r['namaKelas'])) {
 			/* Set account type */
 			$type = 'guru';
 
@@ -50,7 +50,8 @@ class UserController extends Controller {
 			$kelas = Kelas::create([
 			  'namaKelas'  => $r['namaKelas'],
 				'jenisKelas' => $r['jenisKelas'],
-				'kodeKelas'  => $uniquePtr
+				'kodeKelas'  => $uniquePtr,
+				'guruId'		 => $user['id']
 			]);
 
 			/* 
@@ -61,6 +62,8 @@ class UserController extends Controller {
 	      'uid' => $user['id'],
 	      'type' => $type
 	    ]);
+
+			return response()->json(['status' => 'success'], 200);
 		} else {
 			/* Set account type */
 			$type = 'murid';
@@ -94,8 +97,6 @@ class UserController extends Controller {
 	      ]);
 	    }
 		}
-
-		return response()->json(['status' => 'success'], 200);
   }
 
 
@@ -103,11 +104,11 @@ class UserController extends Controller {
   	/* Photo */
 		$pathToFile = $r->file('image')->store('images', 'public');
 
-		Teacher::where('nama', $r['nama'])
-		       ->where('email', $r['email'])
-		       ->update(['photo' => $pathToFile]);
+		User::where('nama', $r['nama'])
+	      ->where('email', $r['email'])
+	      ->update(['foto' => $pathToFile]);
 
-		return $pathToFile;
+	  return $pathToFile;
   }
 
   public function login(Request $r) {
