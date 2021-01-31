@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('guest')->group(function () {
 
   # Guru
   Route::post('guru/murid', [UserController::class, 'murid_by_class']);
+  Route::post('guru/check_class_state', [KelasController::class, 'check_class_state']);
 
   # Google OAuth2
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
