@@ -26,7 +26,9 @@ Route::middleware('guest')->group(function () {
   # Guru
   Route::post('guru/murid', [UserController::class, 'murid_by_class']);
   Route::post('guru/check_class_state', [KelasController::class, 'check_class_state']);
-
+  Route::post('guru/get_materi', [KelasController::class, 'get_materi']);
+  Route::post('guru/get_games', [KelasController::class, 'get_games']);
+  
   # Google OAuth2
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
   Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);
