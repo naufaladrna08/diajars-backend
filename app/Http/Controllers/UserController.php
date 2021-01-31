@@ -180,7 +180,7 @@ class UserController extends Controller {
 		$id = $kelas['id'];
 
 		$students = DB::table('users')
-									->select('users.nama', 'users.jenisKelamin')
+									->select('users.nama', 'users.jenisKelamin', 'users.id')
 					  		  ->join('relasi_kelas', 'users.id', '=', 'relasi_kelas.uid')
 					  		  ->where('relasi_kelas.kid', '=', $id)
 					  		  ->get();
