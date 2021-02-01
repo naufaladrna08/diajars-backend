@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\RelasiKelas;
 use App\Models\TableSosialMedia;
 use App\Models\Kelas;
+use App\Models\NilaiTable;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -85,6 +86,10 @@ class UserController extends Controller {
 	      $relasi = RelasiKelas::create([
 	        'uid' => $user['id'],
 	        'kid' => $kelas['id'] 
+	      ]);
+
+	      $nilai = NilaiTable::create([
+	      	'uid' => $user['id']
 	      ]);
 
 	      /* 
@@ -186,5 +191,11 @@ class UserController extends Controller {
 					  		  ->get();
 
 		return response()->json($students, 200);
+	}
+
+	public function get_statistic(Request $r) {
+		$stats = NilaiTable::where('uid', $r['muridId'])->first();
+
+		return response()->json($stats, 200);
 	}
 }
