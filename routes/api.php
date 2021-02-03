@@ -35,6 +35,10 @@ Route::middleware('guest')->group(function () {
   # Google OAuth2
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
   Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);
+
+  Route::post('test', function() {
+    echo "A";
+  });
 });
 
 
