@@ -54,6 +54,14 @@ class KelasController extends Controller {
 
     if (isset($r['tugasId'])) {
       /* Get Task Detail */
+
+      if ($r['type'] == "materi") {
+        $task = MateriTable::where('id', $r['tugasId'])->first();
+      } else if ($r['type'] == "game") {
+        $task = GameTable::where('id', $r['tugasId'])->first();
+      } else {
+        $task = null;
+      }
     } else {
       /* Get tasks */
       $kelas = Kelas::where('kodeKelas', $r['kodeKelas'])->first();
