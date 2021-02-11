@@ -15,6 +15,10 @@ class CreateTugasTablesTable extends Migration
     {
         Schema::create('tugas_tables', function (Blueprint $table) {
             $table->id();
+            $table->char('nama');
+            $table->integer('kelasId');
+            $table->integer('tugasId'); // Materi Id atau Game Id
+            $table->enum('tipe', ['materi', 'game']);
             $table->timestamps();
         });
     }

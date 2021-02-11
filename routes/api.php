@@ -6,6 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\NilaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,17 @@ Route::middleware('guest')->group(function () {
   Route::post('guru/check_class_state', [KelasController::class, 'check_class_state']);
   Route::post('guru/get_materi', [KelasController::class, 'get_materi']);
   Route::post('guru/get_games', [KelasController::class, 'get_games']);
+  
+  # Materi
+  Route::post('materi/tambah_tugas', [KelasController::class, 'add_task']);
+  Route::post('materi/lihat_tugas', [KelasController::class, 'get_task']);
+  Route::post('materi/detail_tugas', [KelasController::class, 'get_task']);
 
   # Murid
   Route::post('murid/get_statistic', [UserController::class, 'get_statistic']);
+  Route::post('murid/get_class', [KelasController::class, 'student_get_class']);
+
+  Route::post('game/test/tambah_nilai', [NilaiController::class, 'tambah_nilai']);
 
   # Google OAuth2
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
