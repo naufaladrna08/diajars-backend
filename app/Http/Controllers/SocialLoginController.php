@@ -45,7 +45,7 @@ class SocialLoginController extends Controller {
     		return redirect(env('CLIENT_BASE_URL') . '/auth/social-callback?token=' . $this->auth->fromUser($user));
     	}
     } else {
-      return redirect(env('CLIENT_BASE_URL') . '?error=unregistered');
+      return redirect(env('CLIENT_BASE_URL') . '/chooserole');
     }
   }
 }
