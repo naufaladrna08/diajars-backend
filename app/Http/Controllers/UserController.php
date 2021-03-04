@@ -166,10 +166,10 @@ class UserController extends Controller {
   public function index(Request $request) {
     // return response()->json($this->auth()->user());
 
-    return response()->json([
-      'success' => true,
-      'data' => $request->user()
-    ]);
+    // return response()->json([
+    //   'success' => true,
+    //   'data' => $request->user()
+    // ]);
   }
 
   public function logout() {
