@@ -125,13 +125,14 @@ class UserController extends Controller {
 
       $user = $this->auth->authenticate();
       if ($user) {
-        return response()->json([
+	      return response()->json([
           'success' => true,
           'data' => $r->user(),
           'token' => $r->input('token')
         ], 200);
       }
     }
+  
 
     try {
       if (!$token = $this->auth->attempt($r->only('email'))) {
@@ -166,10 +167,10 @@ class UserController extends Controller {
   public function index(Request $request) {
     // return response()->json($this->auth()->user());
 
-    // return response()->json([
-    //   'success' => true,
-    //   'data' => $request->user()
-    // ]);
+    return response()->json([
+      'success' => true,
+      'data' => $request->user()
+    ]);
   }
 
   public function logout() {
