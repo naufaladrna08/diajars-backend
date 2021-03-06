@@ -14,6 +14,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\JWTAuth;
 use Socialite;
+use Concerns\InteractsWithInput;
 
 class UserController extends Controller {
 	protected $auth;
@@ -158,15 +159,16 @@ class UserController extends Controller {
     return response()->json([
       'success' => true,
       'data' => $request->user(),
-      'token' => $token
+      'token' => $input('token')
     ], 200);
   }
 
   /* ME */
-  public function index(Request $request) {
+  public function index(Request $r) {
     return response()->json([
       'success' => true,
-      'data' => $request->user()
+      'data' => $r->user(),
+      'token' => $r->bearerToken()
     ]);
   }
 
