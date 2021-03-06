@@ -55,7 +55,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::group(['middleware' => 'jwt-auth'], function() {
+Route::group(['middleware' => 'jwt.auth'], function() {
   Route::get('/me', [UserController::class, 'index']);
 
   Route::get('/logout', [UserController::class, 'logout']);
