@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\JWTAuth;
 use Socialite;
 use Concerns\InteractsWithInput;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller {
 	protected $auth;
@@ -165,11 +166,12 @@ class UserController extends Controller {
 
   /* ME */
   public function index(Request $r) {
-    return response()->json([
-      'success' => true,
-      'data' => $r->user(),
-      'token' => $r->bearerToken()
-    ]);
+  	$response = Http::withHeaders([
+	    'Accept' => 'application/json',
+	    'Authorization' => 'Bearer '. $r->bearerToken(),
+		]);
+
+    return response()->json(['data' => $r->user(), 'token' => $response]);
   }
 
   public function logout() {
