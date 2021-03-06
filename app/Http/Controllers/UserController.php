@@ -106,7 +106,6 @@ class UserController extends Controller {
 		}
   }
 
-
   public function upload_photo(Request $r) {
   	/* Photo */
 		$pathToFile = $r->file('image')->store('images', 'public');
