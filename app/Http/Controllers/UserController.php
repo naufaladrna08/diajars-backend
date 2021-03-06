@@ -166,12 +166,11 @@ class UserController extends Controller {
 
   /* ME */
   public function index(Request $r) {
-  	$response = Http::withHeaders([
-	    'Accept' => 'application/json',
-	    'Authorization' => 'Bearer '. $r->bearerToken(),
-		]);
-
-    return response()->json(['data' => $r->user(), 'token' => $response]);
+    return response()->json([
+      'success' => true,
+      'data' => $r->user(),
+      'token' => $r->bearerToken()
+    ]);
   }
 
   public function logout() {
