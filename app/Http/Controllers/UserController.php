@@ -201,4 +201,11 @@ class UserController extends Controller {
 
 		return response()->json($stats, 200);
 	}
+
+	/* MURID */
+	public function get_murid_by_id(Request $r) {
+		$stats = User::where('id', $r['muridId'])->first();
+
+		return response()->json($stats, 200);
+	}
 }

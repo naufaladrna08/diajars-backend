@@ -42,6 +42,7 @@ Route::middleware('guest')->group(function () {
 
   # Murid
   Route::post('murid/get_statistic', [UserController::class, 'get_statistic']);
+  Route::post('murid/get_data', [UserController::class, 'get_murid_by_id']);
   Route::post('murid/get_class', [KelasController::class, 'student_get_class']);
 
   Route::post('game/test/tambah_nilai', [NilaiController::class, 'tambah_nilai']);
