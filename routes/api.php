@@ -39,6 +39,7 @@ Route::middleware('guest')->group(function () {
   Route::post('materi/tambah_tugas', [KelasController::class, 'add_task']);
   Route::post('materi/lihat_tugas', [KelasController::class, 'get_task']);
   Route::post('materi/detail_tugas', [KelasController::class, 'get_task']);
+  Route::post('materi/hapus_tugas', [KelasController::class, 'delete_task']);
 
   # Murid
   Route::post('murid/get_statistic', [UserController::class, 'get_statistic']);
@@ -51,9 +52,10 @@ Route::middleware('guest')->group(function () {
   Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
   Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);
 
-  Route::post('test', function() {
-    echo "A";
-  });
+  # Games
+  Route::post('testapi', [NilaiController::class, 'test_nilai']);
+  Route::post('game/mengenal_angka', [NilaiController::class, 'mengenal_angka']);
+  Route::post('game/mengenal_huruf', [NilaiController::class, 'mengenal_huruf']);
 });
 
 

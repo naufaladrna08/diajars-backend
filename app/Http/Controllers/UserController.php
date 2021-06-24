@@ -30,9 +30,9 @@ class UserController extends Controller {
 		$user = 0;
 
 		/* Kode kelas */
-		$uniquePtr = strtoupper(Str::random(6));
-		while (Kelas::where('kodeKelas', $uniquePtr)->exists()) {
-			$uniquePtr = strtoupper(Str::random(6));
+		$uniqueStr = strtoupper(Str::random(6));
+		while (Kelas::where('kodeKelas', $uniqueStr)->exists()) {
+			$uniqueStr = strtoupper(Str::random(6));
 		}
 
 		if (isset($r['namaKelas'])) {
@@ -53,7 +53,7 @@ class UserController extends Controller {
 			$kelas = Kelas::create([
 			  'namaKelas'  => $r['namaKelas'],
 				'jenisKelas' => $r['jenisKelas'],
-				'kodeKelas'  => $uniquePtr,
+				'kodeKelas'  => $uniqueStr,
 				'guruId'		 => $user['id']
 			]);
 

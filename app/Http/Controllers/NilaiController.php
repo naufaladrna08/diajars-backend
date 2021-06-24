@@ -10,6 +10,7 @@ use App\Models\Kelas;
 use App\Models\MateriTable;
 use App\Models\GameTable;
 use App\Models\TugasTable;
+use App\Models\TugasMurid;
 use App\Models\NilaiTable;
 use Tymon\JWTAuth\JWTAuth;
 
@@ -18,13 +19,43 @@ class NilaiController extends Controller{
     $this->auth = $auth;
   }
 
-  public function tambah_nilai(Request $r) {
-  	$user = auth()->user();;
+  /**
+   * Tambahkan nilai pelajaran mengenal angka. 
+   */
+  public function mengenal_angka(Request $r) {
+    $user = TugasMurid::where('muridId', $r['id'])
+                      ->where('_tugasId', $r['tugas_id'])
+                      ->first();
+    
+    if ($user->status == 0) {
+      NilaiTable::where('uid', $r['id'])
+                ->increment('kognitif' , $r['nilai']);
 
-  	// NilaiTable::where('uid', $userdata['id'])->update([
-  	// 	'agama' => $r['nilai']
-  	// ]);
+      TugasMurid::where('muridId', $r['id'])
+                ->where('_tugasId', $r['tugas_id'])
+                ->update(['status' => 1, 'nilai' => $r['nilai']]);
+    }
 
-  	return response()->json($r->cookie('auth._token.local'), 200);
+    return response()->json($r, 200);
+  }
+
+  /**
+   * Tambahkan nilai pelajaran mengenal angka. 
+   */
+  public function mengenal_huruf(Request $r) {
+    $user = TugasMurid::where('muridId', $r['id'])
+                      ->where('_tugasId', $r['tugas_id'])
+                      ->first();
+
+    if ($user->status == 0) {
+      NilaiTable::where('uid', $r['id'])
+                ->increment('kognitif' , $r['nilai']);
+
+      TugasMurid::where('muridId', $r['id'])
+                ->where('_tugasId', $r['tugas_id'])
+                ->update(['status' => 1, 'nilai' => $r['nilai']]);
+    }
+
+    return response()->json($r, 200);
   }
 }
