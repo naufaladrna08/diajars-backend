@@ -13,7 +13,7 @@ class CreateTugasMuridTable extends Migration {
   public function up() {
     Schema::create('tugas_murid', function (Blueprint $table) {
       $table->id();
-      $table->integer('tugasId');
+      $table->integer('_tugasId');
       $table->integer('muridId');
       $table->integer('status');
       $table->timestamps();
