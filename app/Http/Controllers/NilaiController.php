@@ -27,14 +27,14 @@ class NilaiController extends Controller{
                       ->where('_tugasId', $r['tugas_id'])
                       ->first();
     
-    if ($user->status == 0) {
+    // if ($user->status == 0) {
       NilaiTable::where('uid', $r['id'])
                 ->increment('kognitif' , $r['nilai']);
 
       TugasMurid::where('muridId', $r['id'])
                 ->where('_tugasId', $r['tugas_id'])
                 ->update(['status' => 1, 'nilai' => $r['nilai']]);
-    }
+    // }
 
     return response()->json($r, 200);
   }
