@@ -56,6 +56,7 @@ Route::middleware('guest')->group(function () {
   Route::post('testapi', [NilaiController::class, 'test_nilai']);
   Route::post('game/mengenal_angka', [NilaiController::class, 'mengenal_angka']);
   Route::post('game/mengenal_huruf', [NilaiController::class, 'mengenal_huruf']);
+  Route::post('game/simpan_gambar', [NilaiController::class, 'simpan_gambar']);
 });
 
 
