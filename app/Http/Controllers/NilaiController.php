@@ -59,6 +59,22 @@ class NilaiController extends Controller{
     return response()->json($r, 200);
   }
 
+  public function video_selesai(Request $r) {
+    $user = TugasMurid::where('muridId', $r['id'])
+                      ->where('_tugasId', $r['tugas_id'])
+                      ->first();
+
+    NilaiTable::where('uid', $r['id'])
+              ->increment('kognitif' , 1);
+
+    TugasMurid::where('muridId', $r['id'])
+              ->where('_tugasId', $r['tugas_id'])
+              ->update(['status' => 1]);
+
+
+    return response()->json($r, 200);
+  }
+
   public function simpan_gambar(Request $r) {
     return response()->json($r, 200);
   }
