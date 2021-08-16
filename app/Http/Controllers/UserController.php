@@ -119,68 +119,6 @@ class UserController extends Controller {
 	  return $pathToFile;
   }
 
-  public function login(Request $r) {
-    /* Attempt Login with Token */
-    if ($r->input('token')) {
-      $this->auth->setToken($r->input('token'));
-
-      $user = $this->auth->authenticate();
-      if ($user) {
-	      return response()->json([
-          'success' => true,
-          'data' => $r->user(),
-          'token' => $r->input('token')
-        ], 200);
-      }
-    }
-  
-
-    try {
-      if (!$token = $this->auth->attempt($r->only('email'))) {
-        return response()->json([
-          'success' => false,
-          'errors' => [
-            'email' => [
-              "Invalid email address or password"
-            ]
-          ]
-        ], 422);
-      }
-    } catch (JWTException $e) {
-      return response()->json([
-        'success' => false,
-        'errors' => [
-          'email' => [
-            "Invalid email address"
-          ]
-        ]
-      ], 422);
-    }
-
-    return response()->json([
-      'success' => true,
-      'data' => $request->user(),
-      'token' => $input('token')
-    ], 200);
-  }
-
-  /* ME */
-  public function index(Request $r) {
-    return response()->json([
-      'success' => true,
-      'data' => $r->user(),
-      'token' => $r->bearerToken()
-    ]);
-  }
-
-  public function logout() {
-    $this->auth->invalidate();
-
-    return response()->json([
-      'success' => true
-    ]);
-  }
-
   /* GURU */
   public function murid_by_class(Request $r) {
 		/* Check if 'id' exist */

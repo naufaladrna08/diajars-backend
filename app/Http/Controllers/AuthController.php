@@ -27,10 +27,8 @@ class AuthController extends Controller {
           'code'    => 200,
           'status'  => 'Success',
           'message' => 'Data ditemukan',
-          'data'    => [
-            'user'  => $r->user(), 
-            'token' => $r->token
-          ]
+          'data'    => $r->user(),
+          'token'   => $r->token
         ];
 
 	      return response()->json($data);
@@ -38,6 +36,27 @@ class AuthController extends Controller {
     }
   }
 
+  public function me(Request $r) {
+    $data = [
+      'code'    => 200,
+      'status'  => 'Success',
+      'message' => 'Data ditemukan',
+      'data'    => $r->user(),
+      'token'   => $r->bearerToken()
+    ];
+
+    return response()->json($data);
+  }
+
+  public function logout() {
+    $this->auth->invalidate();
+
+    return response()->json([
+      'success' => true
+    ]);
+  }
+
+  /* Internal */
   protected function respondWithToken($token) {
     return response()->json([
       'access_token' => $token,
