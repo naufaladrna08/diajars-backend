@@ -7,6 +7,7 @@ use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,13 @@ header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
 
 Route::middleware('guest')->group(function () {
-	# User
-	Route::post('login', [UserController::class, 'login']);
+	# Auth
+	Route::post('auth/login', [AuthController::class, 'loginWithToken']);
+	// Route::post('auth/refresh', [AuthController::class, 'refresh']);
+  Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
+  Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);
+
+  # Userdata route
 	Route::post('register', [UserController::class, 'register']);
 	Route::post('upload_photo', [UserController::class, 'upload_photo']);
 
@@ -47,10 +53,6 @@ Route::middleware('guest')->group(function () {
   Route::post('murid/get_class', [KelasController::class, 'student_get_class']);
 
   Route::post('game/test/tambah_nilai', [NilaiController::class, 'tambah_nilai']);
-
-  # Google OAuth2
-  Route::get('auth/google', [SocialLoginController::class, 'redirect_to_google']);
-  Route::get('auth/google/callback', [SocialLoginController::class, 'google_callback']);
 
   # Games
   Route::post('testapi', [NilaiController::class, 'test_nilai']);
