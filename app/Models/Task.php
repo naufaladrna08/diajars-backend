@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TugasTable extends Model {
-  use HasFactory;
-
+class Task extends Model {
   protected $fillable = [
-  	'nama',
-  	'kelasId',
-  	'tipe',
-  	'tugasId',
+    'name',
+    'class_id',
+    'type',
+    'another_table_id',
   ];
 }

@@ -4,18 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTugasMuridTable extends Migration {
+class CreateClassRelationsTable extends Migration {
   /**
    * Run the migrations.
    *
    * @return void
-     */
+   */
   public function up() {
-    Schema::create('tugas_murid', function (Blueprint $table) {
+    Schema::create('class_relations', function (Blueprint $table) {
       $table->id();
-      $table->integer('_tugasId');
-      $table->integer('muridId');
-      $table->integer('status');
+      $table->integer('class_id');
+      $table->integer('person_id');
       $table->timestamps();
     });
   }
@@ -26,6 +25,6 @@ class CreateTugasMuridTable extends Migration {
    * @return void
    */
   public function down() {
-    Schema::dropIfExists('tugas_murid');
+    Schema::dropIfExists('class_relations');
   }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRelasiKelasTable extends Migration
+class CreateAssignmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateRelasiKelasTable extends Migration
      */
     public function up()
     {
-        Schema::create('relasi_kelas', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->integer('uid');
-            $table->integer('kid');
+            $table->integer('task_id');
+            $table->integer('person_id');
+            $table->integer('status');
+            $table->integer('score');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateRelasiKelasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relasi_kelas');
+        Schema::dropIfExists('assignments');
     }
 }

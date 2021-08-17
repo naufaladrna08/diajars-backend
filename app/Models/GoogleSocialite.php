@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TugasMurid extends Model {
+class GoogleSocialite extends Model {
   use HasFactory;
 
-  protected $table = "tugas_murid";
   protected $fillable = [
-    'id',
-    '_tugasId',
-    'muridId',
-    'status',
-    'nilai'
+    'person_id', 
+    'type', 
+    'google_id'
   ];
 }

@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTugasTablesTable extends Migration {
+class CreateTasksTable extends Migration {
   /**
    * Run the migrations.
    *
    * @return void
    */
   public function up() {
-    Schema::create('tugas_tables', function (Blueprint $table) {
+    Schema::create('tasks', function (Blueprint $table) {
       $table->id();
-      $table->char('nama');
-      $table->integer('kelasId');
-      $table->integer('tugasId'); // Materi Id atau Game Id
+      $table->char('name');
+      $table->integer('class_id');
+      $table->integer('another_table_id'); // Materi Id atau Game Id
       $table->integer('status'); // 0 Belum dikerjakan, 1 sudah
-      $table->enum('tipe', ['materi', 'game']);
+      $table->enum('type', ['subject', 'game']);
       $table->timestamps();
     });
   }
@@ -28,6 +28,6 @@ class CreateTugasTablesTable extends Migration {
    * @return void
    */
   public function down() {
-    Schema::dropIfExists('tugas_tables');
+    Schema::dropIfExists('tasks');
   }
 }
