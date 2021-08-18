@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\RelasiKelas;
-use App\Models\TableSosialMedia;
-use App\Models\Kelas;
-use App\Models\NilaiTable;
+use App\Models\ClassRelation;
+use App\Models\GoogleSocialite;
+use App\Models\Classes;
+use App\Models\Score;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -31,77 +31,99 @@ class UserController extends Controller {
 
 		/* Kode kelas */
 		$uniqueStr = strtoupper(Str::random(6));
-		while (Kelas::where('kodeKelas', $uniqueStr)->exists()) {
+		while (Classes::where('class_code', $uniqueStr)->exists()) {
 			$uniqueStr = strtoupper(Str::random(6));
 		}
 
 		if (isset($r['namaKelas'])) {
 			/* Set account type */
-			$type = 'guru';
+			$type   = 'teacher';
+			$gender = null;
+
+			if ($r['gender'] == 'Laki-laki') {
+				$gender = 'Male';
+			} else if ($r['gender'] == 'Perempuan') {
+				$gender = 'Female';
+			} else {
+				$gender = null;
+			}
 
 			/* Create teacher account */
 			$user = User::create([
-			  'nama'         => $r['nama'],
-			  'email'        => $r['email'],
-			  'umur'      	 => $r['umur'],
-			  'jenisKelamin' => $r['gender'],
-			  'jenisAkun'		 => 'guru',
-			  'foto'      	 => "null"
+			  'name'          => $r['nama'],
+			  'email'         => $r['email'],
+			  'age'        	  => $r['umur'],
+			  'gender' 			  => $gender,
+			  'account_type'  => $type,
+			  'profile_photo' => 'null'
 			]);
 
 			/* Create class account */
-			$kelas = Kelas::create([
-			  'namaKelas'  => $r['namaKelas'],
-				'jenisKelas' => $r['jenisKelas'],
-				'kodeKelas'  => $uniqueStr,
-				'guruId'		 => $user['id']
+			$kelas = Classes::create([
+			  'class_name' => $r['namaKelas'],
+				'class_type' => $r['jenisKelas'],
+				'class_code' => $uniqueStr,
+				'teacher_id' => $user['id']
 			]);
 
 			/* 
 	     * Create social table 
 	     * fungsinya utk menaruh token google
 	     */
-	    $social = TableSosialMedia::create([
-	      'uid' => $user['id'],
-	      'type' => $type
+	    $social = GoogleSocialite::create([
+	      'person_id' => $user['id'],
+	      'type' 			=> $type
 	    ]);
+
+			\DB::statement("UPDATE users SET person_id=id WHERE id=$user->id");
 
 			return response()->json(['status' => 'success'], 200);
 		} else {
 			/* Set account type */
-			$type = 'murid';
+			$type = 'student';
+			$gender = null;
+			
+			if ($r['gender'] == 'Laki-laki') {
+				$gender = 'Male';
+			} else if ($r['gender'] == 'Perempuan') {
+				$gender = 'Female';
+			} else {
+				$gender = null;
+			}
 
 			/* Create student account */
-			if (Kelas::where('kodeKelas', '=', $r['kodeKelas'])->count() > 0) {
+			if (Classes::where('class_code', '=', $r['kodeKelas'])->count() > 0) {
 	      /* Create student data */
 	      $user = User::create([
-	        'nama' 			   => $r['nama'],
-	        'email' 		   => $r['email'],
-	        'umur' 			   => $r['umur'],
-	        'jenisKelamin' => $r['gender'],
-	        'jenisAkun'    => 'murid',
-	        'foto'				 => null
+	        'name' 			   	=> $r['nama'],
+	        'email' 		   	=> $r['email'],
+	        'age' 			   	=> $r['umur'],
+	        'gender'			  => $gender,
+	        'account_type'  => $type,
+	        'profile_photo'	=> null
 	      ]);
 
-	      $kelas = Kelas::where('kodeKelas', '=', $r['kodeKelas'])->first();
+	      $kelas = Classes::where('class_code', '=', $r['kodeKelas'])->first();
 
-	      $relasi = RelasiKelas::create([
-	        'uid' => $user['id'],
-	        'kid' => $kelas['id'] 
+	      $relasi = ClassRelation::create([
+	        'person_id' => $user['id'],
+	        'class_id'  => $kelas['id'] 
 	      ]);
 
-	      $nilai = NilaiTable::create([
-	      	'uid' => $user['id']
+	      $nilai = Score::create([
+	      	'person_id' => $user['id']
 	      ]);
 
 	      /* 
 	       * Create social table 
 	       * fungsinya utk menaruh token google
 	       */
-	      $social = TableSosialMedia::create([
-	        'uid' => $user['id'],
-	        'type' => $type
+	      $social = GoogleSocialite::create([
+	        'person_id' => $user['id'],
+	        'type'      => $type
 	      ]);
+
+				\DB::statement("UPDATE users SET person_id=id WHERE id=$user->id");
 
 				return response()->json(['status' => 'success'], 200);
 	    }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use App\Models\TableSosialMedia;
+use App\Models\GoogleSocialite;
 use Laravel\Socialite\Facades\Socialite;
 use Tymon\JWTAuth\JWTAuth;
 
@@ -17,7 +17,6 @@ class SocialLoginController extends Controller {
 	}
 
   public function redirect_to_google() {
-  	// dd(['s' => env('JWT_SECRET')]);
     return Socialite::driver('google')->stateless()->redirect();
   }
 
@@ -33,11 +32,11 @@ class SocialLoginController extends Controller {
       
     if (User::where('email', $email)->count() > 0) {
     	$user   = User::where('email', $email)->first();
-    	$social = TableSosialMedia::where('uid', $user['id'])->first();
+    	$social = GoogleSocialite::where('person_id', $user['person_id'])->first();
 
-    	if ($social['social_id'] == null) {
-    		TableSosialMedia::where('uid', $user['id'])->update([
-    			'social_id' => $id
+    	if ($social['google_id'] == null) {
+    		GoogleSocialite::where('person_id', $user['person_id'])->update([
+    			'google_id' => $id
     		]);
 
    	 		return redirect(env('CLIENT_BASE_URL') . '/auth/social-callback?token=' . $this->auth->fromUser($user));
